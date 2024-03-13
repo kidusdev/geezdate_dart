@@ -26,7 +26,7 @@ String format(String pattern, GeezDate geezdate, [FormatLanguage formatLanguage 
   return pattern
       // days
       .replaceAll(RegExp(r"\.d"), "${date < 10 ? "0$date" : date}")
-      .replaceAll(RegExp(r"\.D"), days[gcDate.weekday + 1])
+      .replaceAll(RegExp(r"\.D"), days[gcDate.weekday - 1])
 
       // months
       .replaceAll(RegExp(r"\.m"), "${month < 10 ? "0$month" : month}")

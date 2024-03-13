@@ -1,11 +1,15 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:geezdate/geezdate.dart';
 
 void main(List<String> args) {
-  final before2Months = GeezDate.now().subtract(months: 2);
-  final now = GeezDate.now();
-  final after2Months = GeezDate.now().add(months: 2);
+  final str = jsonDecode(File("./items.json").readAsStringSync());
 
-  print(before2Months.isFuture);
-  print(now.isFuture);
-  print(after2Months.isFuture);
+  for (var i in str) {
+    final date = GeezDate.fromDateTime(DateTime.parse(i["created_at"]));
+
+    final formatted = (date.toFormatted(".M/.Y"));
+    print(formatted);
+  }
 }

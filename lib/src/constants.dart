@@ -9,7 +9,7 @@
 }
 
 const _english = (
-  days: ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"],
+  days: ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"],
   months: [
     "september",
     "october",
@@ -28,17 +28,17 @@ const _english = (
 );
 
 const _amharic = (
-  days: ["እሁድ", "ሰኞ", "ማክሰኞ", "ረቡዕ", "ሐሙስ", "ዓርብ", "ቅዳሜ"],
+  days: ["ሰኞ", "ማክሰኞ", "ረቡዕ", "ሐሙስ", "ዓርብ", "ቅዳሜ", "እሁድ"],
   months: ["መስከረም", "ጥቅምት", "ህዳር", "ታህሳስ", "ጥር", "የካቲት", "መጋቢት", "ሚያዝያ", "ግንቦት", "ሰኔ", "ሐምሌ", "ነሐሴ", "ጳጉሜ"],
 );
 
 const _tigirigna = (
-  days: ["ሰንበት", "ሰኒ", "ሰሉስ", "ረቡዕ", "ሓሙስ", "ዓርቢ", "ቐዳም"],
+  days: ["ሰኒ", "ሰሉስ", "ረቡዕ", "ሓሙስ", "ዓርቢ", "ቐዳም", "ሰንበት"],
   months: ["መስከረም", "ጥቅምቲ", "ሕዳር", "ታሕሳስ", "ጥሪ", "ለካቲት", "መጋቢት", "ሚያዝያ", "ጉንበት", "ሰነ", "ሓምለ", "ነሓሰ", "ጳጉሜ"],
 );
 
 const _oromo = (
-  days: ["dilbata", "wixata", "kibxata", "roobii", "kamiisa", "jimaata", "sanbata"],
+  days: ["wixata", "kibxata", "roobii", "kamiisa", "jimaata", "sanbata", "dilbata"],
   months: [
     "fuulbana",
     "onkololeessa",

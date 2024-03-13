@@ -59,6 +59,7 @@ GeezDate toEC(DateTime inputDate) {
       until -= ethiopianMonths[m];
     }
   }
+  if (ethiopianDate < 1) ethiopianDate = 30;
 
   // if m > 10, we're already on next Ethiopian year
   if (m > 10) ethiopianYear += 1;
