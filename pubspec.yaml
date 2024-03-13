@@ -3,7 +3,7 @@ description: A simple and minimalisting date utility that helps you work with et
   እኛ ራሳችን ለራሳችን ካልሰራን ማን ይሰራልናል። ኣንድ ፈረንጅ መቶ ኣይሰራልን።
 
 version: 0.0.1
-# repository: https://github.com/my_org/my_repo
+repository: https://github.com/kidusdev/geezdate_dart
 
 environment:
   sdk: ^3.2.3
