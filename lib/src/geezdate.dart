@@ -3,6 +3,12 @@ import 'package:jiffy/jiffy.dart';
 import 'convert.dart';
 import 'format.dart';
 
+extension DateTimeGeezDateExtension on DateTime {
+  GeezDate toEC() {
+    return GeezDate.fromDateTime(this);
+  }
+}
+
 class GeezDate {
   final int year;
   final int month;

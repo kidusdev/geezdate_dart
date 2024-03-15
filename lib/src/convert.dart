@@ -131,5 +131,15 @@ DateTime toGC(GeezDate inputDate) {
 
   final gYear = gregorianYear;
   final gMonth = order[m];
-  return DateTime(gYear, gMonth, gregorianDate.ceil());
+  final now = DateTime.now();
+  return DateTime(
+    gYear,
+    gMonth,
+    gregorianDate.ceil(),
+    now.hour,
+    now.minute,
+    now.second,
+    now.millisecond,
+    now.microsecond,
+  );
 }
