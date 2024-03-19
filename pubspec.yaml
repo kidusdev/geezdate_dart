@@ -2,7 +2,7 @@ name: geezdate
 description: A simple and minimalisting date utility that helps you work with ethiopian date in dart/flutter.
   እኛ ራሳችን ለራሳችን ካልሰራን ማን ይሰራልናል። ኣንድ ፈረንጅ መቶ ኣይሰራልን።
 
-version: 0.0.3
+version: 0.0.4
 repository: https://github.com/kidusdev/geezdate_dart
 
 environment:

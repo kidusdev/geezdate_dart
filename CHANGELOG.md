@@ -11,3 +11,7 @@
 ## 0.0.3
 
 - Feature-Added: adding to EC extension to DateTime
+
+## 0.0.4
+
+- Bug-Fixed: toGC was not working properly
