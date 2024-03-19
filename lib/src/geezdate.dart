@@ -55,6 +55,14 @@ class GeezDate {
   bool get isFuture => Jiffy.parseFromDateTime(toGc()).diff(Jiffy.now(), unit: Unit.day) > 0;
   bool get isPast => Jiffy.parseFromDateTime(toGc()).diff(Jiffy.now(), unit: Unit.day) < 0;
 
+  bool get isThisMonth => year == GeezDate.now().year && month == GeezDate.now().month;
+  bool get isThisyear => year == GeezDate.now().year;
+
+  bool isSameDate(GeezDate date) => year == date.year && month == date.month && this.date == date.date;
+  bool isSameDay(GeezDate date) => toGc().weekday == date.toGc().weekday;
+  bool isSameMonth(GeezDate date) => year == date.year && month == date.month;
+  bool isSameYear(GeezDate date) => year == date.year;
+
   @override
   String toString() => "GeezDate ({ year: $year, month: $month, date: $date })";
 }
