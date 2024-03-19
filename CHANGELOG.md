@@ -15,3 +15,7 @@
 ## 0.0.4
 
 - Bug-Fixed: toGC was not working properly
+
+## 0.0.5
+
+- Feature - checking extended with is
