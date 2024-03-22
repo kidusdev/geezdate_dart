@@ -5,23 +5,23 @@ enum FormatLanguage {
   english("english"),
   amharic("amharic"),
   tigirigna("tigirigna"),
-  oromo("oromo");
+  oromifa("oromifa");
 
   final String text;
 
   const FormatLanguage(this.text);
 }
 
-String format(String pattern, GeezDate geezdate, [FormatLanguage formatLanguage = FormatLanguage.amharic]) {
+String formatDate(String pattern, GeezDate geezdate, [FormatLanguage formatLanguage = FormatLanguage.amharic]) {
   final GeezDate(:year, :month, :date) = geezdate;
   final days = getLanguages(formatLanguage.text).days;
   final months = getLanguages(formatLanguage.text).months;
 
   if (pattern.isEmpty) throw "pattern is empty!";
-  if (date < 1 || date > 30) throw "incorrect date! needed 1 - 30, given $date";
+  if (date < 0 || date > 30) throw "incorrect date! needed 0 - 30, given $date";
   if (month < 1 || month > 13) throw "incorrect month! needed 1 - 13, given $month";
 
-  final gcDate = geezdate.toGc();
+  final gcDate = geezdate.toGC();
 
   return pattern
       // days

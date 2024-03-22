@@ -1,145 +1,136 @@
-import '../../../src/geezdate.dart';
+import 'package:geezdate/geezdate.dart';
 
-double startDayOfEthiopian(int year) {
-  final newYearDay = (year / 100).floor() - (year / 400) - 4;
-  return (year - 1) % 4 == 3 ? newYearDay + 1 : newYearDay;
+const _jdEpochOffsetAmeteAlem = -285019; //      ዓ/ዓ
+const _jdEpochOffsetAmeteMihret = 1723856; //    ዓ/ም
+const _jdEpochOffsetGregorian = 1721426;
+const _jdEpochOffsetUnset = -1;
+
+int _jdnOffset = _jdEpochOffsetUnset;
+
+const _gregorianNumberOfMonths = 12;
+List<int> _monthDays = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+// Helpers
+int _quotient(num i, num j) => (i / j).floor();
+num _mod(num i, num j) => i % j;
+bool _isGregorianLeap(int year) => (year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0));
+
+// Era Helpers
+void _setEra(int era) => _jdnOffset =
+    (era == _jdEpochOffsetAmeteAlem) || (era == _jdEpochOffsetAmeteMihret) ? era : throw "Unknown Era: $era";
+bool _isEraSet() => _jdEpochOffsetUnset != _jdnOffset;
+void _unsetEra() => _jdnOffset = _jdEpochOffsetUnset;
+int _guessEraFromJDN(int jdn) =>
+    (jdn >= (_jdEpochOffsetAmeteMihret + 365)) ? _jdEpochOffsetAmeteMihret : _jdEpochOffsetAmeteAlem;
+
+// Conversion
+num _ethiopicToJDN(int day, int month, int year) {
+  final era = _isEraSet() ? _jdnOffset : _jdEpochOffsetAmeteMihret;
+  final jdn = (era + 365) + 365 * (year - 1) + _quotient(year, 4) + 30 * month + day - 31;
+  return jdn;
 }
 
-// TOEC ==============================================================================================
-GeezDate toEC(DateTime inputDate) {
-  List<num> gregorianMonths = [0.0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-  List<num> ethiopianMonths = [0.0, 30, 30, 30, 30, 30, 30, 30, 30, 30, 5, 30, 30, 30, 30];
-  final DateTime(:year, :month, day: date) = inputDate;
+({int year, int month, int date}) _jdnToEthiopic(int jdn) {
+  final era = _isEraSet() ? _jdnOffset : _guessEraFromJDN(jdn);
+  final r = _mod((jdn - era), 1461);
+  final n = _mod(r, 365) + 365 * _quotient(r.toInt(), 1460);
+  final year = 4 * _quotient((jdn - era), 1461) + _quotient(r.toInt(), 365) - _quotient(r.toInt(), 1460);
+  final month = _quotient(n.toInt(), 30) + 1;
+  final day = _mod(n, 30) + 1;
 
-  if (month == 10 && date >= 5 && date <= 14 && year == 1582) {
-    throw "Invalid Date between 5-14 May 1582.";
-  }
-
-  // if gregorian leap year, February has 29 days.
-  if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) gregorianMonths[2] = 29;
-
-  // September sees 8y difference
-  num ethiopianYear = year - 8;
-
-  // if ethiopian leap year pagumain has 6 days
-  if (ethiopianYear % 4 == 3) ethiopianMonths[10] = 6;
-
-  // Ethiopian new year in Gregorian calendar
-  final newYearDay = startDayOfEthiopian(year - 8);
-
-  // calculate number of days up to that date
-  num until = 0;
-  // ignore: curly_braces_in_flow_control_structures
-  for (int i = 1; i < month; i++) until += gregorianMonths[i];
-  until += date;
-
-  // update tahissas (december) to match january 1st
-  num tahissas = ethiopianYear % 4 == 0 ? 26 : 25;
-
-  // take into account the 1582 change
-  if (year < 1582) {
-    ethiopianMonths[1] = 0;
-    ethiopianMonths[2] = tahissas;
-  } else if (until <= 277 && year == 1582) {
-    ethiopianMonths[1] = 0;
-    ethiopianMonths[2] = tahissas;
-  } else {
-    tahissas = newYearDay - 3;
-    ethiopianMonths[1] = tahissas;
-  }
-
-  // calculate month and date incremently
-  int m;
-  num ethiopianDate = 1;
-  for (m = 1; m < ethiopianMonths.length; m++) {
-    if (until <= ethiopianMonths[m]) {
-      ethiopianDate = m == 1 || ethiopianMonths[m] == 0 ? until + (30 - tahissas) : until;
-      break;
-    } else {
-      until -= ethiopianMonths[m];
-    }
-  }
-  if (ethiopianDate < 1) ethiopianDate = 30;
-
-  // if m > 10, we're already on next Ethiopian year
-  if (m > 10) ethiopianYear += 1;
-
-  // Ethiopian months ordered according to Gregorian
-  final order = [0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 1, 2, 3, 4];
-  final ethiopianMonth = order[m.toInt()];
-  return GeezDate(ethiopianYear.toInt(), ethiopianMonth.toInt(), ethiopianDate.toInt());
+  return (year: year, month: month, date: day.toInt());
 }
 
-// TOGC ==============================================================================================
-DateTime toGC(GeezDate inputDate) {
-  final GeezDate(:year, :month, :date) = inputDate;
+int _gregorianToJDN(int day, int month, int year) {
+  final s = _quotient(year, 4) -
+      _quotient(year - 1, 4) -
+      _quotient(year, 100) +
+      _quotient(year - 1, 100) +
+      _quotient(year, 400) -
+      _quotient(year - 1, 400);
 
-  // Ethiopian new year in Gregorian calendar
-  final newYearDay = startDayOfEthiopian(year);
+  final t = _quotient(14 - month, 12);
 
-  // September (Ethiopian) sees 7y difference
-  int gregorianYear = year + 7;
+  final n = 31 * t * (month - 1) + (1 - t) * (59 + s + 30 * (month - 3) + _quotient((3 * month - 7), 5)) + day - 1;
 
-  // Number of days in gregorian months
-  // starting with September (index 1)
-  // Index 0 is reserved for leap years switches.
-  // Index 4 is December, the final month of the year.
-  List<num> gregorianMonths = [0.0, 30, 31, 30, 31, 31, 28, 31, 30, 31, 30, 31, 31, 30];
+  final j = _jdEpochOffsetGregorian +
+      365 * (year - 1) +
+      _quotient(year - 1, 4) -
+      _quotient(year - 1, 100) +
+      _quotient(year - 1, 400) +
+      n;
 
-  // if next gregorian year is leap year, February has 29 days.
-  final nextYear = gregorianYear + 1;
-  if ((nextYear % 4 == 0 && nextYear % 100 != 0) || nextYear % 400 == 0) {
-    gregorianMonths[6] = 29;
-  }
+  return j.toInt();
+}
 
-  // calculate number of days up to that date
-  num until = (month - 1) * 30.0 + date;
-  if (until <= 37 && year <= 1575) {
-    // mysterious rule
-    until += 28;
-    gregorianMonths[0] = 31;
+({int year, int month, int date}) _jdnToGregorian(int jdn) {
+  final r2000 = _mod((jdn - _jdEpochOffsetGregorian), 730485);
+  final r400 = _mod((jdn - _jdEpochOffsetGregorian), 146097);
+  final r100 = _mod(r400, 36524);
+  final r4 = _mod(r100, 1461);
+  var n = _mod(r4, 365) + 365 * _quotient(r4, 1460);
+  final s = _quotient(r4, 1095);
+  final aprime = 400 * _quotient((jdn - _jdEpochOffsetGregorian), 146097) +
+      100 * _quotient(r400, 36524) +
+      4 * _quotient(r100, 1461) +
+      _quotient(r4, 365) -
+      _quotient(r4, 1460) -
+      _quotient(r2000, 730484);
+  final year = aprime + 1;
+  final t = _quotient((364 + s - n), 306);
+  var month = t * (_quotient(n, 31) + 1) + (1 - t) * (_quotient((5 * (n - s) + 13), 153) + 1);
+  n += 1 - _quotient(r2000, 730484);
+  var day = n;
+
+  if ((r100 == 0) && (n == 0) && (r400 != 0)) {
+    month = 12;
+    day = 31;
   } else {
-    until += newYearDay - 1;
-  }
-
-  // if ethiopian year is leap year, paguemain has six days
-  if (year - (1 % 4) == 3) {
-    until += 1;
-  }
-
-  // calculate month and date incremently
-  int m = 0;
-  num gregorianDate = DateTime.now().day;
-  for (int i = 0; i < gregorianMonths.length; i++) {
-    if (until <= gregorianMonths[i]) {
-      m = i;
-      gregorianDate = until;
-      break;
-    } else {
-      m = i;
-      until -= gregorianMonths[i];
+    _monthDays[2] = (_isGregorianLeap(year)) ? 29 : 28;
+    for (var i = 1; i <= _gregorianNumberOfMonths; i += 1) {
+      if (n <= _monthDays[i]) {
+        day = n;
+        break;
+      }
+      n -= _monthDays[i];
     }
   }
+  return (year: year, month: month, date: day.toInt());
+}
 
-  // if m > 4, we're already on next Gregorian year
-  if (m > 4) {
-    gregorianYear += 1;
-  }
+({int date, int month, int year}) _gregorianToEthiopic(int day, int month, int year) {
+  final jdn = _gregorianToJDN(day, month, year);
+  return _jdnToEthiopic(jdn);
+}
 
-  // Gregorian months ordered according to Ethiopian
-  const order = [8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+({int date, int month, int year}) _ethioipicToGreg(int day, int month, int year) {
+  final jdn = _ethiopicToJDN(day, month, year);
+  return _jdnToGregorian(jdn.toInt());
+}
 
-  final gYear = gregorianYear;
-  final gMonth = order[m];
-  final now = DateTime.now();
-  return DateTime(
-    gYear,
-    gMonth,
-    gregorianDate.ceil(),
-    now.hour,
-    now.minute,
-    now.second,
-    now.millisecond,
-    now.microsecond,
-  );
+({int date, int month, int year}) _ethioipicToGregorian(int day, int month, int year, int era) {
+  _setEra(era);
+  final result = _ethioipicToGreg(day, month, year);
+  _unsetEra();
+  return result;
+}
+
+// APIS
+
+// ec to gc
+DateTime toGC(GeezDate date) {
+  final GeezDate(year: y, month: m, date: d) = date;
+  if (d < 0 || d > 30 || m < 0 || m > 13) throw 'Invalid Ethiopian Date';
+
+  final converted = _ethioipicToGregorian(d, m, y, _jdEpochOffsetAmeteMihret);
+  return DateTime(converted.year, converted.month, converted.date);
+}
+
+// gc to ec
+GeezDate toEC(DateTime date) {
+  final DateTime(year: y, month: m, day: d) = date;
+  if (d < 0 || d > 31 || m < 0 || m > 12) throw 'Invalid Gregorian Date';
+
+  final converted = _gregorianToEthiopic(d, m, y);
+  return GeezDate(converted.year, converted.month, converted.date);
 }

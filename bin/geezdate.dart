@@ -1,13 +1,9 @@
 import 'package:geezdate/geezdate.dart';
+import 'dart:collection' as col;
 
 void main(List<String> args) {
-  print(DateTime.now().toEC());
-  // final str = jsonDecode(File("./items.json").readAsStringSync());
+  final grouped = [];
+  final ls = List.generate(200, (index) => GeezDate.now().add(days: index).format(".d .M .Y"));
 
-  // for (var i in str) {
-  //   final date = GeezDate.fromDateTime(DateTime.parse(i["created_at"]));
-
-  //   final formatted = (date.toFormatted(".M/.Y"));
-  //   print(formatted);
-  // }
+  print(ls.join("\n"));
 }
