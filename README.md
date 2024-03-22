@@ -1,7 +1,6 @@
 # GEEZDATE
 
-A simple and minimalisting date utility that helps you work with ethiopian date in dart/flutter.
-እኛ ራሳችን ለራሳችን ካልሰራን ማን ይሰራልናል። ኣንድ ፈረንጅ መቶ ኣይሰራልን።
+A simple and minimalisting date utility that helps you to work with ethiopian date in dart/flutter.
 
 ## Installation
 
@@ -25,6 +24,9 @@ $ flutter pub add geezdate
 // literal GeezDate
 const date = GeezDate({ year: 2016, month: 10, date: 11 });
 
+// now
+const date = GeezDate.now();
+
 // from DateTime object
 const date = GeezDate.fromDate(DateTime.now());
 
@@ -40,26 +42,41 @@ const date = GeezDate.fromJson({"year": 2016, "month": 10, "date": 10});
 ```dart
 // converting EC to GC
 const date = GeezDate({ year: 2016, month: 10, date: 11 });
-const convertedToGC = date.toGc();
+const convertedToGC = date.toGC();
+```
+
+### operators
+
+```dart
+const date = GeezDate({ year: 2016, month: 10, date: 11 });
+const anotherDate = GeezDate({ year: 2015, month: 11, date: 10 });
+
+print(date == anotherDate) // false
+print(date > anotherDate) // true
+print(date < anotherDate) // false
+print(date + 1) // GeezDate({ year: 2016, month: 10, date: 12 })
+print(date - 1) // GeezDate({ year: 2016, month: 10, date: 10 })
+...
 ```
 
 ### formatting
 
 ```dart
-// formatting
 // NB. if you are in VSCODE hover over the `format` function to get description
 const date = GeezDate({ year: 2016, month: 10, date: 11 });
 
-// Languages
-// FormatLanguage.english;
-// FormatLanguage.amharic;
-// FormatLanguage.tigirigna;
-// FormatLanguage.oromo;
-const formatType = FormatLanguage.amharic;
+const formatType = FormatLanguage.am;
 const formatted = date.toFormatter("ዛሬ ቀኑ .D, .M .d, .Y .E ነው።", formatType);
 
 console.log(formatted); // ዛሬ ቀኑ ዓርብ, መጋቢት 06, 2016 ዓ.ም ነው።
 
+// Languages
+// FormatLanguage.en for english;
+// FormatLanguage.am for amharic;
+// FormatLanguage.ti for tigrigna;
+// FormatLanguage.or for oromifa;
+
+// Formatting Strings
 // .d     - date          => 1 - 30
 // .D     - day           => እሁድ - ቅዳሜ
 // .m     - month index   => 1 - 13
@@ -67,6 +84,7 @@ console.log(formatted); // ዛሬ ቀኑ ዓርብ, መጋቢት 06, 2016 ዓ.�
 // .y     - year          => 00
 // .Y     - year          => 0000
 // .E     - calender      => ዓ.ም
+
 ```
 
 ### navigating between dates
@@ -75,10 +93,10 @@ console.log(formatted); // ዛሬ ቀኑ ዓርብ, መጋቢት 06, 2016 ዓ.�
 const date = GeezDate({ year: 2016, month: 10, date: 11 });
 
 // adding time
-const futureDate = date.add(days:1, months:2);
+const futureDate = date.add(months: 1, days: 10);
 
 // subtracting time
-const pastDate = date.subtract(days:1, months:2);
+const pastDate = date.subtract(months: 2, days: 12);
 ...
 ```
 
@@ -88,10 +106,31 @@ const pastDate = date.subtract(days:1, months:2);
 const date = GeezDate({ year: 2016, month: 10, date: 11 });
 const anotherDate = GeezDate({ year: 2015, month: 11, date: 10 });
 
+// checking date
 const isToday = date.isToday;
 const isPast = date.isPast;
 const isFuture = date.isFuture;
+const isThisMonth = date.isThisMonth;
+const isThisYear = date.isThisYear;
+
+// comparing dates
+const isSameDate = date.isSameDate(anotherDate);
+const isSameDay = date.isSameDay(anotherDate);
+const isSameMonth = date.isSameMonth(anotherDate);
+const isSameYear = date.isSameYear(anotherDate);
 ...
+```
+
+### outputing date
+
+```dart
+const date = GeezDate({ year: 2016, month: 10, date: 11 });
+
+print(date.toString())
+// GeezDate ({ year: 2016, month: 10, date: 11 })
+
+print(date.hashCode)
+// 20161011
 ```
 
 #### Upcoming Features

@@ -16,6 +16,7 @@ class GeezDate {
 
   const GeezDate(this.year, this.month, this.date);
 
+  // constructors
   factory GeezDate.now() => convert.toEC(DateTime.now());
   factory GeezDate.fromDateTime(DateTime dateTime) => convert.toEC(dateTime);
   factory GeezDate.fromString(String dateTimeString) => convert.toEC(DateTime.parse(dateTimeString));
@@ -24,22 +25,29 @@ class GeezDate {
     return GeezDate(json["year"] ?? now.year, json["month"] ?? now.month, json["date"] ?? now.date);
   }
 
+  // operators
   @override
   bool operator ==(covariant GeezDate other) => other.year == year && other.month == month && other.date == date;
+  GeezDate operator +(covariant int days) => add(days: days);
+  GeezDate operator -(covariant int days) => subtract(days: days);
+  bool operator >(covariant GeezDate other) =>
+      Jiffy.parseFromDateTime(toGC()).isAfter(Jiffy.parseFromDateTime(other.toGC()));
+  bool operator <(covariant GeezDate other) =>
+      Jiffy.parseFromDateTime(toGC()).isBefore(Jiffy.parseFromDateTime(other.toGC()));
 
-  //
+  // converters
   DateTime toGC() => convert.toGC(this);
 
   // formatting
   /// ### formats
   /// * .d - date        => 1 - 30
-  /// * .D - day         => ሰንበት - ቐዳም
+  /// * .D - day         => ሰኞ - እሁድ
   /// * .m - month index => 1 - 13
   /// * .M - month name  => መስከረም - ጳጉሜ
   /// * .y - year        => 00
   /// * .Y - year        => 0000
   /// * .E - calender    => ዓ.ም
-  String format(String pattern, [FormatLanguage lang = FormatLanguage.amharic]) => formatDate(pattern, this, lang);
+  String format(String pattern, [FormatLanguage lang = FormatLanguage.am]) => formatDate(pattern, this, lang);
 
   // navigating
   GeezDate add({int days = 1, int weeks = 0, int months = 0, int years = 0}) {
@@ -58,7 +66,6 @@ class GeezDate {
   bool get isToday => Jiffy.parseFromDateTime(toGC()).diff(Jiffy.now(), unit: Unit.day) == 0;
   bool get isFuture => Jiffy.parseFromDateTime(toGC()).diff(Jiffy.now(), unit: Unit.day) > 0;
   bool get isPast => Jiffy.parseFromDateTime(toGC()).diff(Jiffy.now(), unit: Unit.day) < 0;
-
   bool get isThisMonth => year == GeezDate.now().year && month == GeezDate.now().month;
   bool get isThisyear => year == GeezDate.now().year;
 

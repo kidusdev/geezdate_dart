@@ -19,3 +19,9 @@
 ## 0.0.9
 
 - Feature - checking extended with is
+-
+
+## 0.0.11
+
+- Feature - adding operators for comparison and computing
+- Refactor - optimizing conversion for precise result
