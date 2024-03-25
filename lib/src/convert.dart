@@ -123,7 +123,17 @@ DateTime toGC(GeezDate date) {
   if (d < 0 || d > 30 || m < 0 || m > 13) throw 'Invalid Ethiopian Date';
 
   final converted = _ethioipicToGregorian(d, m, y, _jdEpochOffsetAmeteMihret);
-  return DateTime(converted.year, converted.month, converted.date);
+  final now = DateTime.now();
+  return DateTime(
+    converted.year,
+    converted.month,
+    converted.date,
+    now.hour,
+    now.minute,
+    now.second,
+    now.millisecond,
+    now.microsecond,
+  );
 }
 
 // gc to ec
