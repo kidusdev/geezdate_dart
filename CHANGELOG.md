@@ -25,3 +25,8 @@
 
 - Feature - adding operators for comparison and computing
 - Refactor - optimizing conversion for precise result
+-
+
+## 0.0.12
+
+- Refactor - converting ec to gc with current time included
