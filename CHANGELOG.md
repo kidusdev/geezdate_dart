@@ -19,7 +19,6 @@
 ## 0.0.9
 
 - Feature - checking extended with is
--
 
 ## 0.0.11
 
@@ -29,3 +28,7 @@
 ## 0.0.12
 
 - Refactor - converting ec to gc with current time included
+
+## 0.0.13
+
+- Feature - adding extensions to int and operators
