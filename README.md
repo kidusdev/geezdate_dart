@@ -22,34 +22,40 @@ $ flutter pub add geezdate
 
 ```dart
 // literal GeezDate
-const date = GeezDate({ year: 2016, month: 10, date: 11 });
+final date = GeezDate({ year: 2016, month: 10, date: 11 });
 
 // now
-const date = GeezDate.now();
+final date = GeezDate.now();
 
 // from DateTime object
-const date = GeezDate.fromDate(DateTime.now());
+final date = GeezDate.fromDate(DateTime.now());
 
-// from string
-const date = GeezDate.fromString("11-10-2016");
+// from string must be date-month-year
+final date = GeezDate.fromString("11-10-2016");
 
 // from json
-const date = GeezDate.fromJson({"year": 2016, "month": 10, "date": 10});
+final date = GeezDate.fromJson({"year": 2016, "month": 10, "date": 10});
 ```
 
-### converting to GC
+### converting
 
 ```dart
 // converting EC to GC
-const date = GeezDate({ year: 2016, month: 10, date: 11 });
-const convertedToGC = date.toGC();
+final gc = GeezDate({ year: 2016, month: 10, date: 11 }).toGC();
+
+// converting GC to EC
+final ec = GeezDate.fromDateTime(DateTime.now());
+
+// converting through extensions
+final ec2 = DateTime.now().toEC();
+
 ```
 
 ### operators
 
 ```dart
-const date = GeezDate({ year: 2016, month: 10, date: 11 });
-const anotherDate = GeezDate({ year: 2015, month: 11, date: 10 });
+final date = GeezDate({ year: 2016, month: 10, date: 11 });
+final anotherDate = GeezDate({ year: 2015, month: 11, date: 10 });
 
 print(date == anotherDate) // false
 print(date > anotherDate) // true
@@ -62,11 +68,11 @@ print(date - 1) // GeezDate({ year: 2016, month: 10, date: 10 })
 ### formatting
 
 ```dart
-// NB. if you are in VSCODE hover over the `format` function to get description
-const date = GeezDate({ year: 2016, month: 10, date: 11 });
+// NB. if you are in VSCODE hover over the `format` function to get the below description
+final date = GeezDate({ year: 2016, month: 10, date: 11 });
 
-const formatType = FormatLanguage.am;
-const formatted = date.toFormatter("ዛሬ ቀኑ .D, .M .d, .Y .E ነው።", formatType);
+final formatType = FormatLanguage.am;
+final formatted = date.toFormatter("ዛሬ ቀኑ .D, .M .d, .Y .E ነው።", formatType);
 
 console.log(formatted); // ዛሬ ቀኑ ዓርብ, መጋቢት 06, 2016 ዓ.ም ነው።
 
@@ -87,44 +93,50 @@ console.log(formatted); // ዛሬ ቀኑ ዓርብ, መጋቢት 06, 2016 ዓ.�
 
 ```
 
-### navigating between dates
+### adding and subtracting from dates
 
 ```dart
-const date = GeezDate({ year: 2016, month: 10, date: 11 });
+final date = GeezDate({ year: 2016, month: 3, date: 11 });
 
 // adding time
-const futureDate = date.add(months: 1, days: 10);
+final futureDate = date.add(months: 1, days: 10);
 
 // subtracting time
-const pastDate = date.subtract(months: 2, days: 12);
+final pastDate = date.subtract(months: 2, days: 12);
+
+// adding through extensions
+print(date + 3.days) // GeezDate({ year: 2016, month: 3, date: 14 })
+print(date + 3.days + 2.months) // GeezDate({ year: 2016, month: 5, date: 14 })
+print(date + 2.years) // GeezDate({ year: 2018, month: 3, date: 11 })
+print(date + 2.years + 2.months) // GeezDate({ year: 2018, month: 5, date: 11 })
 ...
 ```
 
 ### checking
 
 ```dart
-const date = GeezDate({ year: 2016, month: 10, date: 11 });
-const anotherDate = GeezDate({ year: 2015, month: 11, date: 10 });
+final date = GeezDate({ year: 2016, month: 10, date: 11 });
+final anotherDate = GeezDate({ year: 2015, month: 11, date: 10 });
 
 // checking date
-const isToday = date.isToday;
-const isPast = date.isPast;
-const isFuture = date.isFuture;
-const isThisMonth = date.isThisMonth;
-const isThisYear = date.isThisYear;
+final isToday = date.isToday;
+final isPast = date.isPast;
+final isFuture = date.isFuture;
+final isThisMonth = date.isThisMonth;
+final isThisYear = date.isThisYear;
 
 // comparing dates
-const isSameDate = date.isSameDate(anotherDate);
-const isSameDay = date.isSameDay(anotherDate);
-const isSameMonth = date.isSameMonth(anotherDate);
-const isSameYear = date.isSameYear(anotherDate);
+final isSameDate = date.isSameDate(anotherDate);
+final isSameDay = date.isSameDay(anotherDate);
+final isSameMonth = date.isSameMonth(anotherDate);
+final isSameYear = date.isSameYear(anotherDate);
 ...
 ```
 
 ### outputing date
 
 ```dart
-const date = GeezDate({ year: 2016, month: 10, date: 11 });
+final date = GeezDate({ year: 2016, month: 10, date: 11 });
 
 print(date.toString())
 // GeezDate ({ year: 2016, month: 10, date: 11 })

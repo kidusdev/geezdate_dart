@@ -1,2 +1,3 @@
-export 'src/geezdate.dart' show GeezDate, DateTimeGeezDateExtension;
-export 'src/format.dart' show FormatLanguage;
+export 'src/geezdate.dart' show GeezDate;
+export 'src/enums.dart' show FormatLanguage, CompareDatesResultUnit;
+export 'src/extensions.dart' show ConvertTimePeriodsToInt, DateTimeGeezDateExtension;

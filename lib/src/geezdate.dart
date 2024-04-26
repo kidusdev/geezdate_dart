@@ -1,13 +1,9 @@
+import 'package:geezdate/src/compare.dart' as cmp;
+import 'package:geezdate/src/enums.dart';
 import 'package:jiffy/jiffy.dart';
 
 import 'convert.dart' as convert;
 import 'format.dart';
-
-extension DateTimeGeezDateExtension on DateTime {
-  GeezDate toEC() {
-    return GeezDate.fromDateTime(this);
-  }
-}
 
 class GeezDate {
   final int year;
@@ -27,13 +23,11 @@ class GeezDate {
 
   // operators
   @override
-  bool operator ==(covariant GeezDate other) => other.year == year && other.month == month && other.date == date;
+  bool operator ==(covariant GeezDate other) => cmp.isSameDate(this, other);
   GeezDate operator +(covariant int days) => add(days: days);
   GeezDate operator -(covariant int days) => subtract(days: days);
-  bool operator >(covariant GeezDate other) =>
-      Jiffy.parseFromDateTime(toGC()).isAfter(Jiffy.parseFromDateTime(other.toGC()));
-  bool operator <(covariant GeezDate other) =>
-      Jiffy.parseFromDateTime(toGC()).isBefore(Jiffy.parseFromDateTime(other.toGC()));
+  bool operator >(covariant GeezDate other) => cmp.compare(this, other, CompareDatesResultUnit.day) > 0;
+  bool operator <(covariant GeezDate other) => cmp.compare(this, other, CompareDatesResultUnit.day) < 0;
 
   // converters
   DateTime toGC() => convert.toGC(this);
@@ -63,16 +57,21 @@ class GeezDate {
   }
 
   // checking
-  bool get isToday => Jiffy.parseFromDateTime(toGC()).diff(Jiffy.now(), unit: Unit.day) == 0;
-  bool get isFuture => Jiffy.parseFromDateTime(toGC()).diff(Jiffy.now(), unit: Unit.day) > 0;
-  bool get isPast => Jiffy.parseFromDateTime(toGC()).diff(Jiffy.now(), unit: Unit.day) < 0;
-  bool get isThisMonth => year == GeezDate.now().year && month == GeezDate.now().month;
-  bool get isThisyear => year == GeezDate.now().year;
+  bool get isToday => cmp.isSameDate(GeezDate.now(), this); // -
+  bool get isFuture => cmp.compare(this, GeezDate.now(), CompareDatesResultUnit.day) > 0;
+  bool get isPast => cmp.compare(this, GeezDate.now(), CompareDatesResultUnit.day) < 0;
+  bool get isThisMonth => cmp.isSameMonth(this, GeezDate.now());
+  bool get isThisyear => cmp.isSameYear(this, GeezDate.now());
 
-  bool isSameDate(GeezDate date) => year == date.year && month == date.month && this.date == date.date;
-  bool isSameDay(GeezDate date) => toGC().weekday == date.toGC().weekday;
-  bool isSameMonth(GeezDate date) => year == date.year && month == date.month;
-  bool isSameYear(GeezDate date) => year == date.year;
+  // equality
+  bool isSameDate(GeezDate date) => cmp.isSameDate(this, date);
+  bool isSameDay(GeezDate date) => cmp.isSameDay(this, date);
+  bool isSameMonth(GeezDate date) => cmp.isSameMonth(this, date);
+  bool isSameYear(GeezDate date) => cmp.isSameYear(this, date);
+
+  // compare
+  num compareTo(GeezDate date, [CompareDatesResultUnit unit = CompareDatesResultUnit.day]) =>
+      cmp.compare(this, date, unit);
 
   @override
   String toString() => "GeezDate ({ year: $year, month: $month, date: $date })";

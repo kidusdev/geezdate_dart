@@ -1,16 +1,7 @@
+import 'package:geezdate/src/enums.dart';
+
 import 'constants.dart';
 import '../../../src/geezdate.dart';
-
-enum FormatLanguage {
-  en("english"),
-  am("amharic"),
-  ti("tigirigna"),
-  or("oromifa");
-
-  final String text;
-
-  const FormatLanguage(this.text);
-}
 
 String formatDate(String pattern, GeezDate geezdate, [FormatLanguage formatLanguage = FormatLanguage.am]) {
   final GeezDate(:year, :month, :date) = geezdate;
