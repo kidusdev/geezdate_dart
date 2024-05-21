@@ -90,17 +90,23 @@ class GeezDate {
   }
 
   // checking
+  bool get isThisyear => cmp.isSameYear(this, GeezDate.now());
+  bool get isThisMonth => cmp.isSameMonth(this, GeezDate.now());
   bool get isToday => cmp.isSameDate(GeezDate.now(), this); // -
+  bool get isThisHour => cmp.isSameHour(GeezDate.now(), this); // -
+  bool get isThisMinute => cmp.isSameMinute(GeezDate.now(), this); // -
+  bool get isThisSecond => cmp.isSameSecond(GeezDate.now(), this); // -
   bool get isFuture => cmp.compare(this, GeezDate.now(), CompareDatesResultUnit.day) > 0;
   bool get isPast => cmp.compare(this, GeezDate.now(), CompareDatesResultUnit.day) < 0;
-  bool get isThisMonth => cmp.isSameMonth(this, GeezDate.now());
-  bool get isThisyear => cmp.isSameYear(this, GeezDate.now());
 
   // equality
+  bool isSameYear(GeezDate date) => cmp.isSameYear(this, date);
+  bool isSameMonth(GeezDate date) => cmp.isSameMonth(this, date);
   bool isSameDate(GeezDate date) => cmp.isSameDate(this, date);
   bool isSameDay(GeezDate date) => cmp.isSameDay(this, date);
-  bool isSameMonth(GeezDate date) => cmp.isSameMonth(this, date);
-  bool isSameYear(GeezDate date) => cmp.isSameYear(this, date);
+  bool isSameHour(GeezDate date) => cmp.isSameHour(this, date);
+  bool isSameMinute(GeezDate date) => cmp.isSameMinute(this, date);
+  bool isSameSecond(GeezDate date) => cmp.isSameSecond(this, date);
 
   // compare
   num compareTo(GeezDate date, [CompareDatesResultUnit unit = CompareDatesResultUnit.day]) =>

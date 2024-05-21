@@ -3,9 +3,12 @@ import 'package:jiffy/jiffy.dart';
 // =====================================================
 
 enum CompareDatesResultUnit {
-  day(Unit.hour),
+  year(Unit.year),
   month(Unit.month),
-  year(Unit.year);
+  day(Unit.hour),
+  hour(Unit.hour),
+  minute(Unit.minute),
+  second(Unit.second);
 
   final Unit unit;
 

@@ -36,3 +36,7 @@
 ## 0.0.14
 
 - Feature - adding short and long names for month and day words
+
+## 0.0.15
+
+- Feature - Supporting geez time

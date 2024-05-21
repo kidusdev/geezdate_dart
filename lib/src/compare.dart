@@ -10,3 +10,20 @@ bool isSameDate(GeezDate one, GeezDate two) => one.year == two.year && one.month
 bool isSameDay(GeezDate one, GeezDate two) => one.toGC().weekday == one.toGC().weekday;
 bool isSameMonth(GeezDate one, GeezDate two) => one.year == two.year && one.month == two.month;
 bool isSameYear(GeezDate one, GeezDate two) => one.year == two.year;
+
+// equality of two dates
+bool isSameHour(GeezDate one, GeezDate two) =>
+    one.year == two.year && one.month == two.month && one.date == two.date && one.hour == two.hour;
+bool isSameMinute(GeezDate one, GeezDate two) =>
+    one.year == two.year &&
+    one.month == two.month &&
+    one.date == two.date &&
+    one.hour == two.hour &&
+    one.minute == two.minute;
+bool isSameSecond(GeezDate one, GeezDate two) =>
+    one.year == two.year &&
+    one.month == two.month &&
+    one.date == two.date &&
+    one.hour == two.hour &&
+    one.minute == two.minute &&
+    one.second == two.second;

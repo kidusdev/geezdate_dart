@@ -1,5 +1,4 @@
 import 'package:geezdate/geezdate.dart';
-import 'package:geezdate/src/geezdate.dart';
 
 to12(DateTime datetime) {
   final DateTime(:hour, :minute, :second) = datetime;
@@ -17,6 +16,5 @@ void main() {
   //   print("$i $changed");
   // }
 
-  print((GeezDate.now()));
-  print((GeezDate.now()).toGC());
+  print(GeezDate.now().format(".D, .M .d, .Y .h:.mn", lang: FormatLanguage.en));
 }
