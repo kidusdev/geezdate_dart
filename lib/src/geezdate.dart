@@ -72,15 +72,20 @@ class GeezDate {
       formatDate(pattern, this, lang, length);
 
   // navigating
-  GeezDate add({int days = 1, int weeks = 0, int months = 0, int years = 0}) {
-    final newDate =
-        Jiffy.parseFromDateTime(toGC()).add(days: days, weeks: weeks, months: months, years: years).dateTime;
+  GeezDate add(
+      {int years = 0, int months = 0, int weeks = 0, int days = 0, int hours = 0, int minutes = 0, int seconds = 0}) {
+    final newDate = Jiffy.parseFromDateTime(toGC())
+        .add(years: years, months: months, weeks: weeks, days: days, hours: hours, minutes: minutes, seconds: seconds)
+        .dateTime;
     return GeezDate.fromDateTime(newDate);
   }
 
-  GeezDate subtract({int days = 1, int weeks = 0, int months = 0, int years = 0}) {
-    final newDate =
-        Jiffy.parseFromDateTime(toGC()).subtract(days: days, weeks: weeks, months: months, years: years).dateTime;
+  GeezDate subtract(
+      {int years = 0, int months = 0, int weeks = 0, int days = 0, int hours = 0, int minutes = 0, int seconds = 0}) {
+    final newDate = Jiffy.parseFromDateTime(toGC())
+        .subtract(
+            years: years, months: months, weeks: weeks, days: days, hours: hours, minutes: minutes, seconds: seconds)
+        .dateTime;
     return GeezDate.fromDateTime(newDate);
   }
 
