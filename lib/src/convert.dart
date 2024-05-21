@@ -100,7 +100,7 @@ int _gregorianToJDN(int day, int month, int year) {
 
 // info: Converters
 to12HoursFormat(int hour) => switch (hour) { > 12 => hour - 12, 0 => 12, _ => hour };
-toEthiopianTimeFormat(int hour) {
+localForeignTime(int hour) {
   final timeIn12HoursFormat = to12HoursFormat(hour);
 
   return switch (timeIn12HoursFormat) {
@@ -136,7 +136,7 @@ toEthiopianTimeFormat(int hour) {
 // info: APIS
 // ec to gc
 DateTime toGC(GeezDate date) {
-  final GeezDate(year: y, month: m, date: d) = date;
+  final GeezDate(year: y, month: m, date: d, :hour, :minute, :second) = date;
   if (d < 0 || d > 30 || m < 0 || m > 13) throw 'Invalid Ethiopian Date';
 
   final converted = _ethioipicToGregorian(d, m, y, _jdEpochOffsetAmeteMihret);
@@ -145,9 +145,9 @@ DateTime toGC(GeezDate date) {
     converted.year,
     converted.month,
     converted.date,
-    now.hour,
-    now.minute,
-    now.second,
+    localForeignTime(hour),
+    minute,
+    second,
     now.millisecond,
     now.microsecond,
   );
@@ -163,7 +163,7 @@ GeezDate toEC(DateTime date) {
     converted.year,
     converted.month,
     converted.date,
-    toEthiopianTimeFormat(hr),
+    localForeignTime(hr),
     min,
     sec,
   );

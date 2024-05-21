@@ -21,8 +21,17 @@ class GeezDate {
   factory GeezDate.fromString(String dateTimeString) => convert.toEC(DateTime.parse(dateTimeString));
   factory GeezDate.fromJson(Map<String, int> json) {
     final now = GeezDate.fromDateTime(DateTime.now());
-    return GeezDate(json["year"] ?? now.year, json["month"] ?? now.month, json["date"] ?? now.date);
+    return GeezDate(
+      json["year"] ?? now.year,
+      json["month"] ?? now.month,
+      json["date"] ?? now.date,
+      json["hour"] ?? now.hour,
+      json["minute"] ?? now.minute,
+      json["second"] ?? now.second,
+    );
   }
+  // converters
+  DateTime toGC() => convert.toGC(this);
 
   // operators
   @override
@@ -31,9 +40,6 @@ class GeezDate {
   GeezDate operator -(covariant int days) => subtract(days: days);
   bool operator >(covariant GeezDate other) => cmp.compare(this, other, CompareDatesResultUnit.day) > 0;
   bool operator <(covariant GeezDate other) => cmp.compare(this, other, CompareDatesResultUnit.day) < 0;
-
-  // converters
-  DateTime toGC() => convert.toGC(this);
 
   // formatting
   /// ## formats
