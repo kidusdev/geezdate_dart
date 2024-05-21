@@ -24,3 +24,14 @@ enum FormatLanguage {
 
   const FormatLanguage(this.text);
 }
+
+// =====================================================
+
+enum FormatLength {
+  short("short"),
+  long("long");
+
+  final String text;
+
+  const FormatLength(this.text);
+}

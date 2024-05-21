@@ -32,3 +32,7 @@
 ## 0.0.13
 
 - Feature - adding extensions to int and operators
+
+## 0.0.14
+
+- Feature - adding short and long names for month and day words

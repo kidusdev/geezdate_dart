@@ -41,7 +41,12 @@ class GeezDate {
   /// * .y - year        => 00
   /// * .Y - year        => 0000
   /// * .E - calender    => ዓ.ም
-  String format(String pattern, [FormatLanguage lang = FormatLanguage.am]) => formatDate(pattern, this, lang);
+  String format(
+    String pattern, {
+    FormatLanguage lang = FormatLanguage.am,
+    FormatLength length = FormatLength.short,
+  }) =>
+      formatDate(pattern, this, lang, length);
 
   // navigating
   GeezDate add({int days = 1, int weeks = 0, int months = 0, int years = 0}) {

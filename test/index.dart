@@ -1,8 +1,10 @@
-import 'package:geezdate/geezdate.dart';
+import "package:intl/intl.dart";
+import "package:jiffy/jiffy.dart";
 
 void main() {
-  final one = GeezDate.now();
-  final two = one + 1.years + 2.months + 10.days;
+  final myDate = DateTime.now();
+  final formattedDate = DateFormat('hh:mm a').format(myDate);
 
-  print(two);
+  print(Jiffy.now().toLocal().Hms);
+  print(formattedDate);
 }

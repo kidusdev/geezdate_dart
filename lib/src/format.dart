@@ -3,10 +3,21 @@ import 'package:geezdate/src/enums.dart';
 import 'constants.dart';
 import '../../../src/geezdate.dart';
 
-String formatDate(String pattern, GeezDate geezdate, [FormatLanguage formatLanguage = FormatLanguage.am]) {
+String formatDate(
+  String pattern,
+  GeezDate geezdate, [
+  FormatLanguage formatLanguage = FormatLanguage.am,
+  FormatLength formatLength = FormatLength.short,
+]) {
   final GeezDate(:year, :month, :date) = geezdate;
-  final days = getLanguages(formatLanguage.text).days;
-  final months = getLanguages(formatLanguage.text).months;
+  final days = switch (formatLength) {
+    FormatLength.short => getLanguages(formatLanguage).daysInShorts,
+    FormatLength.long => getLanguages(formatLanguage).days,
+  };
+  final months = switch (formatLength) {
+    FormatLength.short => getLanguages(formatLanguage).monthsInShorts,
+    FormatLength.long => getLanguages(formatLanguage).months,
+  };
 
   if (pattern.isEmpty) throw "pattern is empty!";
   if (date < 1 || date > 30) throw "incorrect date! needed 0 - 30, given $date";
