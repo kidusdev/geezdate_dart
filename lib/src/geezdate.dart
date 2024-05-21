@@ -100,5 +100,5 @@ class GeezDate {
       "GeezDate ({ year: $year, month: $month, date: $date, hour: $hour, minute: $minute, second: $second })";
 
   @override
-  int get hashCode => int.parse("$year$month$date");
+  int get hashCode => int.parse("$year$month$date$hour$minute$second");
 }
