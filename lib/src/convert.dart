@@ -98,25 +98,42 @@ int _gregorianToJDN(int day, int month, int year) {
   return (year: year, month: month, date: day.toInt());
 }
 
+// info: Converters
+to12HoursFormat(int hour) => switch (hour) { > 12 => hour - 12, 0 => 12, _ => hour };
+toEthiopianTimeFormat(int hour) {
+  final timeIn12HoursFormat = to12HoursFormat(hour);
+
+  return switch (timeIn12HoursFormat) {
+    1 => 7,
+    2 => 8,
+    3 => 9,
+    4 => 10,
+    5 => 11,
+    6 => 12,
+    7 => 1,
+    8 => 2,
+    9 => 3,
+    10 => 4,
+    11 => 5,
+    12 => 6,
+    _ => hour,
+  };
+}
+
 ({int date, int month, int year}) _gregorianToEthiopic(int day, int month, int year) {
   final jdn = _gregorianToJDN(day, month, year);
   return _jdnToEthiopic(jdn);
 }
 
-({int date, int month, int year}) _ethioipicToGreg(int day, int month, int year) {
-  final jdn = _ethiopicToJDN(day, month, year);
-  return _jdnToGregorian(jdn.toInt());
-}
-
 ({int date, int month, int year}) _ethioipicToGregorian(int day, int month, int year, int era) {
   _setEra(era);
-  final result = _ethioipicToGreg(day, month, year);
+  final jdn = _ethiopicToJDN(day, month, year);
+  final result = _jdnToGregorian(jdn.toInt());
   _unsetEra();
   return result;
 }
 
-// APIS
-
+// info: APIS
 // ec to gc
 DateTime toGC(GeezDate date) {
   final GeezDate(year: y, month: m, date: d) = date;
@@ -138,9 +155,16 @@ DateTime toGC(GeezDate date) {
 
 // gc to ec
 GeezDate toEC(DateTime date) {
-  final DateTime(year: y, month: m, day: d) = date;
+  final DateTime(year: y, month: m, day: d, hour: hr, minute: min, second: sec) = date;
   if (d < 0 || d > 31 || m < 0 || m > 12) throw 'Invalid Gregorian Date';
 
   final converted = _gregorianToEthiopic(d, m, y);
-  return GeezDate(converted.year, converted.month, converted.date);
+  return GeezDate(
+    converted.year,
+    converted.month,
+    converted.date,
+    toEthiopianTimeFormat(hr),
+    min,
+    sec,
+  );
 }
