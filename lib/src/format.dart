@@ -9,7 +9,7 @@ String formatDate(
   FormatLanguage formatLanguage = FormatLanguage.am,
   FormatLength formatLength = FormatLength.short,
 ]) {
-  final GeezDate(:year, :month, :date) = geezdate;
+  final GeezDate(:year, :month, :date, :hour, :minute, :second) = geezdate;
   final days = switch (formatLength) {
     FormatLength.short => getLanguages(formatLanguage).daysInShorts,
     FormatLength.long => getLanguages(formatLanguage).days,
@@ -26,6 +26,12 @@ String formatDate(
   final gcDate = geezdate.toGC();
 
   return pattern
+
+      // time
+      .replaceAll(RegExp(r"\.s"), "${second < 10 ? "0$second" : second}")
+      .replaceAll(RegExp(r"\.mn"), "${minute < 10 ? "0$minute" : minute}")
+      .replaceAll(RegExp(r"\.h"), "${hour < 10 ? "0$hour" : hour}")
+
       // days
       .replaceAll(RegExp(r"\.d"), "${date < 10 ? "0$date" : date}")
       .replaceAll(RegExp(r"\.D"), days[gcDate.weekday - 1])

@@ -9,8 +9,11 @@ class GeezDate {
   final int year;
   final int month;
   final int date;
+  final int hour;
+  final int minute;
+  final int second;
 
-  const GeezDate(this.year, this.month, this.date);
+  const GeezDate(this.year, this.month, this.date, [this.hour = 1, this.minute = 0, this.second = 0]);
 
   // constructors
   factory GeezDate.now() => convert.toEC(DateTime.now());
@@ -33,14 +36,28 @@ class GeezDate {
   DateTime toGC() => convert.toGC(this);
 
   // formatting
-  /// ### formats
-  /// * .d - date        => 1 - 30
-  /// * .D - day         => ሰኞ - እሁድ
-  /// * .m - month index => 1 - 13
-  /// * .M - month name  => መስከረም - ጳጉሜ
-  /// * .y - year        => 00
-  /// * .Y - year        => 0000
-  /// * .E - calender    => ዓ.ም
+  /// ## formats
+  ///
+  /// -----------------------------------------
+  /// * **Date**
+  ///   * .d - date        => 1 - 30
+  ///   * .D - day         => ሰኞ - እሁድ
+  /// -----------------------------------------
+  /// * **Month**
+  ///   * .m - month index => 1 - 13
+  ///   * .M - month name  => መስከረም - ጳጉሜ
+  /// -----------------------------------------
+  /// * **Year**
+  ///   * .y - year        => 00
+  ///   * .Y - year        => 0000
+  /// -----------------------------------------
+  /// * **Calendar type**
+  ///   * .E - calender    => ዓ.ም
+  /// -----------------------------------------
+  /// * **Time**
+  ///   * .h - hour        => 1 - 12
+  ///   * .mn - minute      => 1 - 60
+  ///   * .s - second      => 1 - 60
   String format(
     String pattern, {
     FormatLanguage lang = FormatLanguage.am,
@@ -79,7 +96,9 @@ class GeezDate {
       cmp.compare(this, date, unit);
 
   @override
-  String toString() => "GeezDate ({ year: $year, month: $month, date: $date })";
+  String toString() =>
+      "GeezDate ({ year: $year, month: $month, date: $date, hour: $hour, minute: $minute, second: $second })";
+
   @override
   int get hashCode => int.parse("$year$month$date");
 }
