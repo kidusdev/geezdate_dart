@@ -5,7 +5,10 @@ extension DateTimeGeezDateExtension on DateTime {
 }
 
 extension ConvertTimePeriodsToInt on int {
-  int get days => this;
-  int get months => this * 30;
-  int get years => this * 365;
+  int get years => this * 31536000;
+  int get months => this * 2628288;
+  int get days => this * 86400;
+  int get hours => this * 3600;
+  int get minutes => this * 60;
+  int get seconds => this;
 }

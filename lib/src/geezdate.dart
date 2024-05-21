@@ -36,8 +36,8 @@ class GeezDate {
   // operators
   @override
   bool operator ==(covariant GeezDate other) => cmp.isSameDate(this, other);
-  GeezDate operator +(covariant int days) => add(days: days);
-  GeezDate operator -(covariant int days) => subtract(days: days);
+  GeezDate operator +(covariant int seconds) => add(seconds: seconds);
+  GeezDate operator -(covariant int seconds) => subtract(seconds: seconds);
   bool operator >(covariant GeezDate other) => cmp.compare(this, other, CompareDatesResultUnit.day) > 0;
   bool operator <(covariant GeezDate other) => cmp.compare(this, other, CompareDatesResultUnit.day) < 0;
 
