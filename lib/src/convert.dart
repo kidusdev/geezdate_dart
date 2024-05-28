@@ -100,10 +100,13 @@ int _gregorianToJDN(int day, int month, int year) {
 
 // info: Converters
 to12HoursFormat(int hour) => switch (hour) { > 12 => hour - 12, 0 => 12, _ => hour };
-localForeignTime(int hour) {
-  final timeIn12HoursFormat = to12HoursFormat(hour);
 
-  return switch (timeIn12HoursFormat) {
+({int hour, Shift shift}) localForeignTime(int hour) {
+  final isDayShift = hour >= 6 && hour <= 17;
+  final shift = isDayShift ? Shift.day : Shift.night;
+
+  final timeIn12HoursFormat = to12HoursFormat(hour);
+  int hr = switch (timeIn12HoursFormat) {
     1 => 7,
     2 => 8,
     3 => 9,
@@ -118,6 +121,8 @@ localForeignTime(int hour) {
     12 => 6,
     _ => hour,
   };
+
+  return (hour: hr, shift: shift);
 }
 
 ({int date, int month, int year}) _gregorianToEthiopic(int day, int month, int year) {
@@ -145,7 +150,7 @@ DateTime toGC(GeezDate date) {
     converted.year,
     converted.month,
     converted.date,
-    localForeignTime(hour),
+    localForeignTime(hour).hour,
     minute,
     second,
     now.millisecond,
@@ -158,13 +163,16 @@ GeezDate toEC(DateTime date) {
   final DateTime(year: y, month: m, day: d, hour: hr, minute: min, second: sec) = date;
   if (d < 0 || d > 31 || m < 0 || m > 12) throw 'Invalid Gregorian Date';
 
+  final localTime = localForeignTime(hr);
+
   final converted = _gregorianToEthiopic(d, m, y);
   return GeezDate(
     converted.year,
     converted.month,
     converted.date,
-    localForeignTime(hr),
+    localTime.hour,
     min,
     sec,
+    localTime.shift,
   );
 }

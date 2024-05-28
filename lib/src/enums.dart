@@ -38,3 +38,18 @@ enum FormatLength {
 
   const FormatLength(this.text);
 }
+
+// =====================================================
+
+enum Shift {
+  day(text: "day"),
+  night(text: "night");
+
+  final String text;
+
+  const Shift({required this.text});
+
+  static fromString(String shift) {
+    return switch (shift) { "day" => Shift.day, "night" => Shift.night, _ => Shift.day };
+  }
+}

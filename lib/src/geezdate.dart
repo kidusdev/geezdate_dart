@@ -12,8 +12,10 @@ class GeezDate {
   final int hour;
   final int minute;
   final int second;
+  final Shift shift;
 
-  const GeezDate(this.year, this.month, this.date, [this.hour = 1, this.minute = 0, this.second = 0]);
+  const GeezDate(this.year, this.month, this.date,
+      [this.hour = 1, this.minute = 0, this.second = 0, this.shift = Shift.day]);
 
   // constructors
   factory GeezDate.now() => convert.toEC(DateTime.now());
@@ -28,8 +30,10 @@ class GeezDate {
       json["hour"] ?? now.hour,
       json["minute"] ?? now.minute,
       json["second"] ?? now.second,
+      Shift.fromString(json["shift"].toString()) ?? Shift.day,
     );
   }
+
   // converters
   DateTime toGC() => convert.toGC(this);
 
@@ -114,7 +118,7 @@ class GeezDate {
 
   @override
   String toString() =>
-      "GeezDate ({ year: $year, month: $month, date: $date, hour: $hour, minute: $minute, second: $second })";
+      "GeezDate ({ year: $year, month: $month, date: $date, hour: $hour, minute: $minute, second: $second, shift: $shift })";
 
   @override
   int get hashCode => int.parse("$year$month$date$hour$minute$second");
