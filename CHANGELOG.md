@@ -40,3 +40,7 @@
 ## 0.0.15
 
 - Feature - Supporting geez time
+
+## 0.0.16
+
+- Feature - Adding day and night shifts for geez time
