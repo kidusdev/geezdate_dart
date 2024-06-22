@@ -43,7 +43,9 @@ class GeezDate {
   GeezDate operator +(covariant int seconds) => add(seconds: seconds);
   GeezDate operator -(covariant int seconds) => subtract(seconds: seconds);
   bool operator >(covariant GeezDate other) => cmp.compare(this, other, CompareDatesResultUnit.day) > 0;
+  bool operator >=(covariant GeezDate other) => cmp.compare(this, other, CompareDatesResultUnit.day) >= 0;
   bool operator <(covariant GeezDate other) => cmp.compare(this, other, CompareDatesResultUnit.day) < 0;
+  bool operator <=(covariant GeezDate other) => cmp.compare(this, other, CompareDatesResultUnit.day) <= 0;
 
   // formatting
   /// ## formats
