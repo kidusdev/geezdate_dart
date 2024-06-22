@@ -113,6 +113,7 @@ class GeezDate {
   bool isSameHour(GeezDate date) => cmp.isSameHour(this, date);
   bool isSameMinute(GeezDate date) => cmp.isSameMinute(this, date);
   bool isSameSecond(GeezDate date) => cmp.isSameSecond(this, date);
+  bool isBetween(GeezDate start, GeezDate end) => cmp.isBetween(this, start, end);
 
   // compare
   num compareTo(GeezDate date, [CompareDatesResultUnit unit = CompareDatesResultUnit.day]) =>

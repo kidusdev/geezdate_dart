@@ -1,7 +1,15 @@
 import 'package:geezdate/geezdate.dart';
 import 'package:jiffy/jiffy.dart';
 
-// difference in numbers between 2 dates
+// .where((e) =>
+//     e.startDate!.toEC() < (date ?? value.date) + 1.days &&
+//     (e.endDate == null || e.endDate!.toEC() > (date ?? value.date) + 1.days))
+// // convert
+
+//
+
+// difference in numbers between 2 and more dates
+bool isBetween(GeezDate one, GeezDate two, GeezDate three) => one >= two && one < three;
 num compare(GeezDate one, GeezDate two, [CompareDatesResultUnit unit = CompareDatesResultUnit.day]) =>
     Jiffy.parseFromDateTime(one.toGC()).diff(Jiffy.parseFromDateTime(two.toGC()), unit: unit.unit);
 
