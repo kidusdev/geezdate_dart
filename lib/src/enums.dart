@@ -5,7 +5,7 @@ import 'package:jiffy/jiffy.dart';
 enum CompareDatesResultUnit {
   year(Unit.year),
   month(Unit.month),
-  day(Unit.hour),
+  day(Unit.day),
   hour(Unit.hour),
   minute(Unit.minute),
   second(Unit.second);

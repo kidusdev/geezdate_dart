@@ -44,3 +44,14 @@
 ## 0.0.16
 
 - Feature - Adding day and night shifts for geez time
+
+## 0.0.17
+
+- Feature
+  - isBetween to check if a date is between 2 other dates
+  - <= and => operators to check comparison between 2 dates
+
+## 0.0.18
+
+- Bug Fixed
+  - changed the hour duplication to day in CompareDatesResultUnit
