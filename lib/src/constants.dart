@@ -5,6 +5,7 @@ import 'package:geezdate/geezdate.dart';
   List<String> daysInShorts,
   List<String> months,
   List<String> monthsInShorts,
+  ({String am, String pm}) shifts,
 }) getLanguages(FormatLanguage lang) {
   return switch (lang) {
     FormatLanguage.en => _english,
@@ -33,6 +34,7 @@ const _english = (
     "Pagumen"
   ],
   monthsInShorts: ["Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Pag"],
+  shifts: (am: "D", pm: "N")
 );
 
 const _amharic = (
@@ -40,6 +42,7 @@ const _amharic = (
   daysInShorts: ["ሰኞ", "ማክ", "ረቡ", "ሐሙ", "ዓር", "ቅዳ", "እሁ"],
   months: ["መስከረም", "ጥቅምት", "ህዳር", "ታህሳስ", "ጥር", "የካቲት", "መጋቢት", "ሚያዝያ", "ግንቦት", "ሰኔ", "ሐምሌ", "ነሐሴ", "ጳጉሜ"],
   monthsInShorts: ["መስ", "ጥቅ", "ህዳ", "ታህ", "ጥር", "የካ", "መጋ", "ሚያ", "ግን", "ሰኔ", "ሐም", "ነሐ", "ጳጉ"],
+  shifts: (am: "ቀ", pm: "ማ")
 );
 
 const _tigirigna = (
@@ -47,6 +50,7 @@ const _tigirigna = (
   daysInShorts: ["ሰኒ", "ሰሉ", "ረቡ", "ሓሙ", "ዓር", "ቐዳ", "ሰን"],
   months: ["መስከረም", "ጥቅምቲ", "ሕዳር", "ታሕሳስ", "ጥሪ", "ለካቲት", "መጋቢት", "ሚያዝያ", "ጉንበት", "ሰነ", "ሓምለ", "ነሓሰ", "ጳጉሜ"],
   monthsInShorts: ["መስ", "ጥቅ", "ሕዳ", "ታሕ", "ጥሪ", "ለካ", "መጋ", "ሚያ", "ጉን", "ሰነ", "ሓም", "ነሓ", "ጳጉ"],
+  shifts: (am: "ቀ", pm: "ም")
 );
 
 const _oromo = (
@@ -68,4 +72,5 @@ const _oromo = (
     "Pagume"
   ],
   monthsInShorts: ["Fuu", "Onk", "Sad", "Mud", "Ama", "Gur", "Bit", "Elb", "Caa", "Wax", "Ado", "Hag", "Pag"],
+  shifts: (am: "D", pm: "N")
 );

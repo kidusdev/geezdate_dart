@@ -55,3 +55,8 @@
 
 - Bug Fixed
   - changed the hour duplication to day in CompareDatesResultUnit
+
+## 0.0.19
+
+- Feat: adding formating for shifts Refa: change default lang to ti and default length to long
+- Refa: change default lang to ti and default length to long while formatting

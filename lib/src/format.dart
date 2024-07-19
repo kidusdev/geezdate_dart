@@ -6,10 +6,10 @@ import '../../../src/geezdate.dart';
 String formatDate(
   String pattern,
   GeezDate geezdate, [
-  FormatLanguage formatLanguage = FormatLanguage.am,
-  FormatLength formatLength = FormatLength.short,
+  FormatLanguage formatLanguage = FormatLanguage.ti,
+  FormatLength formatLength = FormatLength.long,
 ]) {
-  final GeezDate(:year, :month, :date, :hour, :minute, :second) = geezdate;
+  final GeezDate(:year, :month, :date, :hour, :minute, :second, :shift) = geezdate;
   final days = switch (formatLength) {
     FormatLength.short => getLanguages(formatLanguage).daysInShorts,
     FormatLength.long => getLanguages(formatLanguage).days,
@@ -18,6 +18,7 @@ String formatDate(
     FormatLength.short => getLanguages(formatLanguage).monthsInShorts,
     FormatLength.long => getLanguages(formatLanguage).months,
   };
+  final shifts = getLanguages(formatLanguage).shifts;
 
   if (pattern.isEmpty) throw "pattern is empty!";
   if (date < 1 || date > 30) throw "incorrect date! needed 0 - 30, given $date";
@@ -28,22 +29,25 @@ String formatDate(
   return pattern
 
       // time
-      .replaceAll(RegExp(r"\.s"), "${second < 10 ? "0$second" : second}")
-      .replaceAll(RegExp(r"\.mn"), "${minute < 10 ? "0$minute" : minute}")
-      .replaceAll(RegExp(r"\.h"), "${hour < 10 ? "0$hour" : hour}")
+      .replaceAll(RegExp(r"\.sh"), shift == Shift.day ? shifts.am : shifts.pm)
+      .replaceAll(RegExp(r"\.s"), add0(second))
+      .replaceAll(RegExp(r"\.mn"), add0(minute))
+      .replaceAll(RegExp(r"\.h"), add0(hour))
 
       // days
-      .replaceAll(RegExp(r"\.d"), "${date < 10 ? "0$date" : date}")
+      .replaceAll(RegExp(r"\.d"), add0(date))
       .replaceAll(RegExp(r"\.D"), days[gcDate.weekday - 1])
 
       // months
-      .replaceAll(RegExp(r"\.m"), "${month < 10 ? "0$month" : month}")
+      .replaceAll(RegExp(r"\.m"), add0(month))
       .replaceAll(RegExp(r"\.M"), months[month - 1])
 
       // years
-      .replaceAll(RegExp(r"\.y+"), "${2016 % 100}")
+      .replaceAll(RegExp(r"\.y+"), "${year % 100}")
       .replaceAll(RegExp(r"\.Y"), "$year")
 
       // EC
       .replaceAll(RegExp(r"\.[Ee]+"), "ዓ.ም");
 }
+
+String add0(num number) => "${number < 10 ? "0$number" : number}";

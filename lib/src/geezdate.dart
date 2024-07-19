@@ -72,8 +72,8 @@ class GeezDate {
   ///   * .s - second      => 1 - 60
   String format(
     String pattern, {
-    FormatLanguage lang = FormatLanguage.am,
-    FormatLength length = FormatLength.short,
+    FormatLanguage lang = FormatLanguage.ti,
+    FormatLength length = FormatLength.long,
   }) =>
       formatDate(pattern, this, lang, length);
 
