@@ -60,3 +60,7 @@
 
 - Feat: adding formating for shifts Refa: change default lang to ti and default length to long
 - Refa: change default lang to ti and default length to long while formatting
+
+## 0.0.20
+
+- Feat: adding formatting for gc dates

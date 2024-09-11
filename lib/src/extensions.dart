@@ -12,3 +12,7 @@ extension ConvertTimePeriodsToInt on int {
   int get minutes => this * 60;
   int get seconds => this;
 }
+
+extension DateFormat on DateTime {
+  String format(String pattern) => GeezDate.formatGC(this, pattern);
+}

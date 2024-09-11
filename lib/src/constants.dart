@@ -74,3 +74,5 @@ const _oromo = (
   monthsInShorts: ["Fuu", "Onk", "Sad", "Mud", "Ama", "Gur", "Bit", "Elb", "Caa", "Wax", "Ado", "Hag", "Pag"],
   shifts: (am: "D", pm: "N")
 );
+
+List<String> orderMonthsForGC(List<String> months) => [...months.sublist(4, 12), ...months.sublist(0, 4)];

@@ -14,8 +14,18 @@ class GeezDate {
   final int second;
   final Shift shift;
 
-  const GeezDate(this.year, this.month, this.date,
-      [this.hour = 1, this.minute = 0, this.second = 0, this.shift = Shift.day]);
+  const GeezDate(
+    this.year,
+    this.month,
+    this.date, [
+    this.hour = 1,
+    this.minute = 0,
+    this.second = 0,
+    this.shift = Shift.day,
+  ]);
+
+  // static
+  static String formatGC(DateTime datetime, String format) => formatGCDate(datetime, format);
 
   // constructors
   factory GeezDate.now() => convert.toEC(DateTime.now());
