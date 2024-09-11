@@ -68,3 +68,7 @@
 ## 0.0.21
 
 - BUG-FIX: accepting lang and format length in gc dates format
+
+## 0.0.22
+
+- BUG-FIX: making default short in formatting

@@ -55,10 +55,9 @@ String formatGCDate(
   DateTime datetime,
   String pattern, [
   FormatLanguage formatLanguage = FormatLanguage.en,
-  FormatLength formatLength = FormatLength.long,
+  FormatLength formatLength = FormatLength.short,
 ]) {
   final DateTime(:year, :month, :day, :hour, :minute, :second, :weekday) = datetime;
-  print(Jiffy.now().hour);
   final days = switch (formatLength) {
     FormatLength.short => getLanguages(formatLanguage).daysInShorts,
     FormatLength.long => getLanguages(formatLanguage).days,
