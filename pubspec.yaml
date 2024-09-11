@@ -1,5 +1,5 @@
 name: geezdate
-version: 0.0.20
+version: 0.0.21
 
 description: A simple and minimalisting date utility that helps you to work with ethiopian calender date in dart/flutter.
 

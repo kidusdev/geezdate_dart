@@ -1,4 +1,4 @@
-import "geezdate.dart";
+import "package:geezdate/geezdate.dart";
 
 extension DateTimeGeezDateExtension on DateTime {
   GeezDate toEC() => GeezDate.fromDateTime(this);
@@ -14,5 +14,6 @@ extension ConvertTimePeriodsToInt on int {
 }
 
 extension DateFormat on DateTime {
-  String format(String pattern) => GeezDate.formatGC(this, pattern);
+  String format(String pattern, {FormatLanguage lang = FormatLanguage.en, FormatLength length = FormatLength.short}) =>
+      GeezDate.formatGC(this, pattern);
 }

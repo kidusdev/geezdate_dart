@@ -64,3 +64,7 @@
 ## 0.0.20
 
 - Feat: adding formatting for gc dates
+
+## 0.0.21
+
+- BUG-FIX: accepting lang and format length in gc dates format

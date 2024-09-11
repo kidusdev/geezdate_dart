@@ -25,7 +25,13 @@ class GeezDate {
   ]);
 
   // static
-  static String formatGC(DateTime datetime, String format) => formatGCDate(datetime, format);
+  static String formatGC(
+    DateTime datetime,
+    String format, {
+    FormatLanguage lang = FormatLanguage.en,
+    FormatLength length = FormatLength.short,
+  }) =>
+      formatGCDate(datetime, format);
 
   // constructors
   factory GeezDate.now() => convert.toEC(DateTime.now());
