@@ -1,5 +1,4 @@
 import 'package:geezdate/src/enums.dart';
-import 'package:jiffy/jiffy.dart';
 
 import 'constants.dart';
 import '../../../src/geezdate.dart';

@@ -88,7 +88,7 @@ class GeezDate {
   ///   * .s - second      => 1 - 60
   String format(
     String pattern, {
-    FormatLanguage lang = FormatLanguage.ti,
+    FormatLanguage lang = FormatLanguage.am,
     FormatLength length = FormatLength.long,
   }) =>
       formatDate(pattern, this, lang, length);
@@ -112,7 +112,7 @@ class GeezDate {
   }
 
   // checking
-  bool get isThisyear => cmp.isSameYear(this, GeezDate.now());
+  bool get isThisYear => cmp.isSameYear(this, GeezDate.now());
   bool get isThisMonth => cmp.isSameMonth(this, GeezDate.now());
   bool get isToday => cmp.isSameDate(GeezDate.now(), this); // -
   bool get isThisHour => cmp.isSameHour(GeezDate.now(), this); // -
@@ -137,7 +137,7 @@ class GeezDate {
 
   @override
   String toString() =>
-      "GeezDate ({ year: $year, month: $month, date: $date, hour: $hour, minute: $minute, second: $second, shift: $shift })";
+      "GeezDate (year: $year, month: $month, date: $date, hour: $hour, minute: $minute, second: $second, shift: $shift)";
 
   @override
   int get hashCode => int.parse("$year$month$date$hour$minute$second");
