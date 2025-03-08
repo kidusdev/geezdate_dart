@@ -1,6 +1,8 @@
+![GEEZ DATE IMAGE](./assets/img.png)
+
 # GEEZDATE
 
-A simple and minimalisting date utility that helps you to work with ethiopian date in dart/flutter.
+A simple and lightweight date utility designed to make working with Ethiopian dates effortless in Dart and Flutter. It provides an easy-to-use interface, allowing developers to quickly handle and manipulate Ethiopian calendar dates without complexity. Perfect for projects that require seamless integration of Ethiopian date formats
 
 ## Installation
 
